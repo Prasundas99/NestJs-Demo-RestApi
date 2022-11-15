@@ -26,8 +26,8 @@ export class ItemsController {
 
   // Nest way: more preffered
   @Get()
-  findAll(): Item[] {
-    return this.itemService.findAll();
+  async findAll(): Promise<Item[]> {
+    return await this.itemService.findAll();
   }
 
   @Post()
@@ -38,8 +38,8 @@ export class ItemsController {
   // get params fromm request
   // instead on req.params.id we do it like params.id
   @Get(':id')
-  findOne(@Param('id') id): Item {
-    return this.itemService.findOne(id);
+  async findOne(@Param('id') id): Promise<Item> {
+    return await this.itemService.findOne(id);
   }
 
   @Delete(':id')
