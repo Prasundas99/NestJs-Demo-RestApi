@@ -26,9 +26,20 @@ export class ItemsService {
     //     },
     // ]
 
+    // findAll(): Item[] {
+    //     return this.items;
+    // }
+
+    // findOne(id: string): Item {
+    //     return this.items.find(item => item.id === id);
+    // }
+
+
     // from database
     constructor(@InjectModel('Item') private readonly ItemModel:Model<Item>){}
     
+
+
     async findAll(): Promise<Item[]> {
         return await this.ItemModel.find();
     }
@@ -36,4 +47,16 @@ export class ItemsService {
     async findOne(id: string): Promise<Item> {
         return await this.ItemModel.findById({_id: id});
     }
+    async create(item: Item): Promise<Item> {
+        const newItem = new this.ItemModel(item);
+        return await newItem.save();
+      }
+    
+      async delete(id: string): Promise<Item> {
+        return await this.ItemModel.findByIdAndRemove(id);
+      }
+    
+      async update(id: string, item: Item): Promise<Item> {
+        return await this.ItemModel.findByIdAndUpdate(id, item, { new: true });
+      }
 }
