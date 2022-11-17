@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Item } from './interfaces/item.interface';
-import {Model} from 'mongoose';
-import {InjectModel} from '@nestjs/mongoose'
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose'
 @Injectable()
 export class ItemsService {
     // hardcoded
@@ -36,8 +36,8 @@ export class ItemsService {
 
 
     // from database
-    constructor(@InjectModel('Item') private readonly ItemModel:Model<Item>){}
-    
+    constructor(@InjectModel('Item') private readonly ItemModel: Model<Item>) { }
+
 
 
     async findAll(): Promise<Item[]> {
@@ -45,18 +45,18 @@ export class ItemsService {
     }
 
     async findOne(id: string): Promise<Item> {
-        return await this.ItemModel.findById({_id: id});
+        return await this.ItemModel.findById({ _id: id });
     }
     async create(item: Item): Promise<Item> {
         const newItem = new this.ItemModel(item);
         return await newItem.save();
-      }
-    
-      async delete(id: string): Promise<Item> {
+    }
+
+    async delete(id: string): Promise<Item> {
         return await this.ItemModel.findByIdAndRemove(id);
-      }
-    
-      async update(id: string, item: Item): Promise<Item> {
+    }
+
+    async update(id: string, item: Item): Promise<Item> {
         return await this.ItemModel.findByIdAndUpdate(id, item, { new: true });
-      }
+    }
 }
