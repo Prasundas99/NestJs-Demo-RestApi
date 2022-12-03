@@ -13,7 +13,9 @@ import { CreateItemDto } from './dto/create-item.dto';
 import { Request, Response } from 'express';
 import { Item } from './interfaces/item.interface';
 import { ItemsService } from './items.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('items')
 @Controller('items')
 export class ItemsController {
     constructor(private readonly itemService: ItemsService) { }
