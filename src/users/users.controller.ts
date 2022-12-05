@@ -1,18 +1,23 @@
-import { Controller, Post, Get } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Controller, Post, Get, UseGuards, Request } from '@nestjs/common';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { LocalAuthGuard } from 'src/auth/local-auth.guard';
+import { User } from './users.service';
+import { AuthenticatedGuard } from 'src/auth/authenticated.guard';
 
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-      //POST /login
+
+  @UseGuards(LocalAuthGuard)    
   @Post('login')
-  login(): string {
-    return "" //this.appService.getHello();
+  login(@Request() req: any): User {
+    return req.user;
   }
 
   // GET /protected
-  @Get('protected')
-  getInfo(): string {
+  @UseGuards(AuthenticatedGuard)
+  @Get()
+  getAllUsers(): string {
     return "" //this.appService.getHello();
   }
 }
